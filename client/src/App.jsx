@@ -6,13 +6,14 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import AddArticle from "./pages/AddArticle";
 import EditArticle from "./pages/EditArticle";
+import Footer from "./components/Footer";
 
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+      <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#bfdcff] via-[#93c5fd] to-[#60a5fa]">
         <Navbar />
-        <main className="p-6 max-w-5xl mx-auto">
+        <main className="flex-1 py-8 px-2 sm:px-6 max-w-screen-xl mx-auto w-full">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/article/:slug" element={<Article />} />
@@ -22,6 +23,7 @@ function App() {
             <Route path="/wiki-admin/edit/:id" element={<EditArticle />} />
           </Routes>
         </main>
+        <Footer />
       </div>
     </Router>
   );

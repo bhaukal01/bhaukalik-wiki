@@ -10,6 +10,7 @@ export default function AddArticle() {
 
   useEffect(() => {
     if (!localStorage.getItem("token")) navigate("/wiki-admin");
+    // eslint-disable-next-line
   }, []);
 
   const [title, setTitle] = useState("");
@@ -44,7 +45,6 @@ export default function AddArticle() {
   }, [title, category, tags, content]);
 
   const handleImageUpload = async (file) => {
-    // convert to base64
     const reader = new FileReader();
     return new Promise((resolve, reject) => {
       reader.onload = async () => {
@@ -70,7 +70,6 @@ export default function AddArticle() {
     try {
       setSaving(true);
       const url = await handleImageUpload(file);
-      // insert markdown image syntax
       setContent((c) => `${c}\n\n![](${url})\n\n`);
     } catch (err) {
       console.error(err);
@@ -103,75 +102,92 @@ export default function AddArticle() {
   };
 
   return (
-    <div>
-      <h2 className="text-2xl font-bold mb-4">Add New Article</h2>
+    <div className="flex flex-col items-center justify-center min-h-[70vh]">
+      <div className="w-full max-w-6xl bg-white/75 dark:bg-[#232a3b]/90 backdrop-blur-lg shadow-2xl rounded-2xl border border-[#2563eb]/20 px-8 py-10">
+        <h2 className="text-2xl font-bold mb-6 text-[#2563eb] text-center tracking-tight">
+          Add New Article
+        </h2>
 
-      <form onSubmit={submit} className="space-y-4">
-        <input
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Title"
-          className="w-full border px-3 py-2 rounded"
-          required
-        />
-        <input
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          placeholder="Category"
-          className="w-full border px-3 py-2 rounded"
-          required
-        />
-        <input
-          value={tags}
-          onChange={(e) => setTags(e.target.value)}
-          placeholder="Tags (comma separated)"
-          className="w-full border px-3 py-2 rounded"
-        />
-        <div>
-          <label className="block mb-2 text-sm">Insert image</label>
-          <input type="file" accept="image/*" onChange={handleInsertImage} />
-          {saving && (
-            <div className="text-sm text-gray-500 mt-2">Uploading image...</div>
-          )}
-        </div>
+        <form onSubmit={submit} className="space-y-6">
+          <input
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Title"
+            className="w-full bg-white/90 text-gray-800 dark:bg-[#191d29]/80 dark:text-[#c4dafb] border border-[#3b82f6]/20 rounded-lg px-4 py-3 shadow focus:ring-2 focus:ring-[#2563eb] outline-none transition"
+            required
+            spellCheck={false}
+          />
+          <input
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            placeholder="Category"
+            className="w-full bg-white/90 text-gray-800 dark:bg-[#191d29]/80 dark:text-[#c4dafb] border border-[#3b82f6]/20 rounded-lg px-4 py-3 shadow focus:ring-2 focus:ring-[#2563eb] outline-none transition"
+            required
+            spellCheck={false}
+          />
+          <input
+            value={tags}
+            onChange={(e) => setTags(e.target.value)}
+            placeholder="Tags (comma separated)"
+            className="w-full bg-white/90 text-gray-800 dark:bg-[#191d29]/80 dark:text-[#c4dafb] border border-[#3b82f6]/20 rounded-lg px-4 py-3 shadow focus:ring-2 focus:ring-[#2563eb] outline-none transition"
+            spellCheck={false}
+          />
+          <div>
+            <label className="block mb-2 text-sm font-bold text-[#2563eb]">
+              Insert image
+            </label>
+            <input type="file" accept="image/*" onChange={handleInsertImage} />
+            {saving && (
+              <div className="text-sm text-gray-500 mt-2">
+                Uploading image...
+              </div>
+            )}
+          </div>
+          <MarkdownEditor content={content} setContent={setContent} />
 
-        <MarkdownEditor content={content} setContent={setContent} />
-
-        <div className="flex items-center gap-3">
-          <button
-            type="submit"
-            className="bg-blue-600 text-white px-4 py-2 rounded"
-          >
-            Publish
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              localStorage.removeItem(DRAFT_KEY);
-              setTitle("");
-              setCategory("");
-              setTags("");
-              setContent("");
-            }}
-            className="px-3 py-2 border rounded"
-          >
-            Clear Draft
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              localStorage.setItem(
-                DRAFT_KEY,
-                JSON.stringify({ title, category, tags, content })
-              );
-              alert("Draft saved");
-            }}
-            className="px-3 py-2 border rounded"
-          >
-            Save Draft
-          </button>
-        </div>
-      </form>
+          <div className="flex flex-wrap gap-3 items-center pt-2">
+            <button
+              type="submit"
+              className="px-5 py-2.5 font-semibold rounded-lg bg-gradient-to-r from-[#22c55e] to-[#059669] text-white shadow-lg hover:opacity-90 transition"
+            >
+              Publish
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                localStorage.removeItem(DRAFT_KEY);
+                setTitle("");
+                setCategory("");
+                setTags("");
+                setContent("");
+              }}
+              className="px-4 py-2 font-semibold rounded-lg bg-white/80 text-[#2563eb] border border-[#2563eb]/30 shadow hover:bg-[#2563eb] hover:text-white transition"
+            >
+              Clear Draft
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                localStorage.setItem(
+                  DRAFT_KEY,
+                  JSON.stringify({ title, category, tags, content })
+                );
+                alert("Draft saved");
+              }}
+              className="px-4 py-2 font-semibold rounded-lg bg-white/80 text-[#2563eb] border border-[#2563eb]/30 shadow hover:bg-[#2563eb] hover:text-white transition"
+            >
+              Save Draft
+            </button>
+            <button
+              className="px-5 py-2.5 font-semibold rounded-lg bg-gradient-to-r from-[#dc2626] to-[#f87171] text-white shadow-lg hover:opacity-90 transition"
+              type="button"
+              onClick={() => navigate(-1)}
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
