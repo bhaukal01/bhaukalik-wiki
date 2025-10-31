@@ -1,6 +1,5 @@
 # Environment files (ignore .env and any .env.* files anywhere)
 **/.env
-**/.env.*
 
 # node_modules directories (ignore in repo root and all subdirectories)
 **/node_modules/

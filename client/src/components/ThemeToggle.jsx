@@ -1,3 +1,4 @@
+/* Not functional as of now */
 import { useEffect, useState } from "react";
 
 export default function ThemeToggle() {

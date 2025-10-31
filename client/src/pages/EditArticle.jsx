@@ -10,7 +10,6 @@ export default function EditArticle() {
 
   useEffect(() => {
     if (!localStorage.getItem("token")) navigate("/wiki-admin");
-    // eslint-disable-next-line
   }, []);
 
   const [loading, setLoading] = useState(true);

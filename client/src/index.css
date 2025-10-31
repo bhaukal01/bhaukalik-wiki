@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-/* Prism theme import */
 @import "prismjs/themes/prism-tomorrow.css";
 
 /* Basic global styles */

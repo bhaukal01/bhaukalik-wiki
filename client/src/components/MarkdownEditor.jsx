@@ -5,7 +5,6 @@ import "@uiw/react-markdown-preview/markdown.css";
 import "../editor-fix.css";
 
 export default function MarkdownEditor({ content, setContent }) {
-  // Pick any comfortable height; avoid "100%" here
   const HEIGHT = 500; // px
 
   return (

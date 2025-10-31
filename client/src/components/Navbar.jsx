@@ -48,7 +48,7 @@ export default function Navbar() {
               Logout
             </button>
           )}
-          {/* <ThemeToggle /> */}
+          {/* <ThemeToggle /> */} {/* Uncomment to enable theme toggle */}
         </div>
       </div>
     </nav>
